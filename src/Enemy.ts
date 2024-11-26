@@ -2,6 +2,8 @@ import { Player } from "./Player";
 export class Enemy extends Player {
     constructor(name:string,initX:number,initY:number){
         super(name,initX,initY)
+        this.playerDiv.classList.add('enemy')
+        
     }
     uncontrolMovmentByRandom=()=>{
         this.uncontrolMovmentByRandomInterval=setInterval(()=>{

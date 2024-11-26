@@ -13,23 +13,22 @@ export class Pacman {
     this.enemies = [];
     this.pacman = new Player(playername, 0, 0);
     this.level = level;
-    if (level === "easy"){
-        this.createEnemyWithRandomInitPosition("Antek")
-        this.createEnemyWithRandomInitPosition("Szymon")
+    this.pacmanContainer = document.querySelector(".pacmanContainer");
+    if (level === "easy") {
+      this.createEnemyWithRandomInitPosition("Antek");
     }
     if (level === "medium") {
-        this.createEnemyWithRandomInitPosition("Antek")
-        this.createEnemyWithRandomInitPosition("Szymon")
-        this.createEnemyWithRandomInitPosition("Amelia")
+      this.createEnemyWithRandomInitPosition("Antek");
+      this.createEnemyWithRandomInitPosition("Szymon");
+      this.createEnemyWithRandomInitPosition("Amelia");
     }
     if (level === "hard") {
-        this.createEnemyWithRandomInitPosition("Antek")
-        this.createEnemyWithRandomInitPosition("Szymon")
-        this.createEnemyWithRandomInitPosition("Amelia")
-        this.createEnemyWithRandomInitPosition("Helena")
-        this.createEnemyWithRandomInitPosition("Emilia")
+      this.createEnemyWithRandomInitPosition("Antek");
+      this.createEnemyWithRandomInitPosition("Szymon");
+      this.createEnemyWithRandomInitPosition("Amelia");
+      this.createEnemyWithRandomInitPosition("Helena");
+      this.createEnemyWithRandomInitPosition("Emilia");
     }
-    this.pacmanContainer = document.querySelector(".pacmanContainer");
     this.pacman.playerDiv.classList.add("player");
     this.pacmanContainer?.appendChild(this.pacman.playerDiv);
     this.pacman.controlMovementByKeys();
@@ -40,11 +39,15 @@ export class Pacman {
     });
     this.getPositions();
   }
-  createEnemyWithRandomInitPosition(enemyName:string){
-    let x=Math.abs(Math.floor(Math.random()*this.windowWidth)-100)
-    let y=Math.abs(Math.floor(Math.random()*this.windowHeight)-100) 
-    let newEnemy=new Enemy(enemyName, x, y);
-    this.enemies.push(newEnemy);
+  createEnemyWithRandomInitPosition(enemyName: string) {
+    if (this.pacmanContainer) {
+      let x = Math.round((Math.random()*this.pacmanContainer.clientWidth-60)/60)*60;
+      let y = Math.round((Math.random() * this.pacmanContainer.clientHeight) / 60) * 60;
+      console.log(x,y);
+
+      let newEnemy = new Enemy(enemyName, x, y);
+      this.enemies.push(newEnemy);
+    }
   }
 
   gameOver() {
@@ -72,10 +75,13 @@ export class Pacman {
   getPositions() {
     this.gameInterval = setInterval(() => {
       this.enemies.forEach((enemy) => {
+        console.log(this.pacman.positionX,this.pacman.positionY,enemy.positionX,enemy.positionY);
         if (
-          Math.abs(this.pacman.positionY - enemy.positionY) < 80 &&
-          Math.abs(this.pacman.positionX - enemy.positionX) < 80
+          this.pacman.positionY === enemy.positionY &&
+          this.pacman.positionX===enemy.positionX
         ) {
+         
+          
           this.gameOver();
         }
       });

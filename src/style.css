@@ -3,6 +3,7 @@
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
   margin: 0;
+  box-sizing: border-box;
 }
 button {
   padding: 20px 50px;
@@ -15,14 +16,21 @@ body {
   display: block;
   position: relative;
 }
+.pacmanContainer{
+  overflow: hidden;
+  border: 1px dotted white;
+  position: relative;
+width: 780px;
+height: 600px;
+margin: 0 auto;
+}
 .player,
 .enemy {
   position: absolute;
-  width: 100px;
-  height: 100px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   background-color: #f2d648;
-  margin-top: 20px;
   animation: eat .35s infinite cubic-bezier(0.85, 0, 0.15, 1);
   animation-direction: alternate;
   clip-path: polygon(100% 0, 100% 25%, 50% 50%, 50% 50%, 100% 75%, 100% 100%, 0 100%, 0 0);

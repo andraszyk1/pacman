@@ -10,9 +10,10 @@ export class Player {
   uncontrolInterval3: any;
   uncontrolMovmentByRandomInterval: any;
   name = "";
-  step = 20;
+  step = 60;
   timeInterval = 500;
   playerDiv: HTMLDivElement;
+  pacmanContainer: HTMLDivElement | null;
   constructor(
     name: string,
     initialPositionX: number,
@@ -20,6 +21,7 @@ export class Player {
   ) {
     this.name = name;
     this.playerDiv = document.createElement("div");
+    this.pacmanContainer = document.querySelector(".pacmanContainer");
     let playerMounth = document.createElement("div");
     playerMounth.classList.add("playerMounth");
     this.playerDiv.appendChild(playerMounth);
@@ -27,7 +29,6 @@ export class Player {
     this.positionY = initialPositionY ? initialPositionY : 0;
     this.playerDiv.style.left = `${this.positionX}px`;
     this.playerDiv.style.top = `${this.positionY}px`;
-  
   }
   clearControlMovementByKeysIntervals = () => {
     clearInterval(this.moveDownInterval);
@@ -44,29 +45,61 @@ export class Player {
   moveRight = () => {
     this.clearControlMovementByKeysIntervals();
     this.moveRightInterval = setInterval(() => {
-      this.positionX = this.positionX + this.step;
-      this.playerDiv.style.left = `${this.positionX}px`;
+      if (this.pacmanContainer) {
+        console.log("PacmanRight",this.playerDiv.offsetLeft,this.pacmanContainer.offsetWidth);
+      
+        this.positionX = this.positionX + this.step;
+        if (this.positionX > this.pacmanContainer.offsetWidth - this.playerDiv.offsetWidth) {
+          this.clearControlMovementByKeysIntervals();
+        } else {
+          this.playerDiv.style.left = `${this.positionX}px`;
+        }
+      }
     }, this.timeInterval);
   };
   moveDown = () => {
     this.clearControlMovementByKeysIntervals();
     this.moveDownInterval = setInterval(() => {
-      this.positionY = this.positionY + this.step;
-      this.playerDiv.style.top = `${this.positionY}px`;
+      if (this.pacmanContainer) {
+        this.positionY = this.positionY + this.step;
+        if (
+          this.positionY > this.pacmanContainer?.offsetHeight - this.playerDiv.offsetHeight
+        ) {
+          this.clearControlMovementByKeysIntervals();
+        } else {
+          this.playerDiv.style.top = `${this.positionY}px`;
+        }
+      }
     }, this.timeInterval);
   };
   moveLeft = () => {
     this.clearControlMovementByKeysIntervals();
     this.moveLeftInterval = setInterval(() => {
-      this.positionX = this.positionX - this.step;
-      this.playerDiv.style.left = `${this.positionX}px`;
+      if (this.pacmanContainer) {
+      
+        if (this.positionX < this.pacmanContainer?.offsetLeft-this.playerDiv.offsetWidth) {
+          this.clearControlMovementByKeysIntervals();
+        
+        } else {
+          this.positionX = this.positionX - this.step;
+          this.playerDiv.style.left = `${this.positionX}px`;
+        }
+      }
     }, this.timeInterval);
   };
   moveUp() {
     this.clearControlMovementByKeysIntervals();
     this.moveUpInterval = setInterval(() => {
-      this.positionY = this.positionY - this.step;
-      this.playerDiv.style.top = `${this.positionY}px`;
+      if (this.pacmanContainer) {
+        this.positionY = this.positionY - this.step;
+        if (
+          this.positionY < this.pacmanContainer?.offsetTop
+        ) {
+          this.clearControlMovementByKeysIntervals();
+        } else {
+          this.playerDiv.style.top = `${this.positionY}px`;
+        }
+      }
     }, this.timeInterval);
   }
 
@@ -88,7 +121,5 @@ export class Player {
         this.clearControlMovementByKeysIntervals();
       }
     });
-
-
   };
 }
