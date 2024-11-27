@@ -7,7 +7,9 @@ export class Player {
   name = "";
   step = 60;
   timeInterval = 500;
+  // playerImg:HTMLImageElement;
   playerDiv: HTMLDivElement;
+  playerEye: HTMLDivElement;
   playerMounth: HTMLDivElement;
   pacmanContainer: HTMLDivElement | null;
   constructor(
@@ -27,13 +29,20 @@ export class Player {
     this.playerDiv = document.createElement("div");
     this.playerDiv.classList.add("player");
     this.playerDiv.textContent = name;
-    this.pacmanContainer?.appendChild(this.playerDiv);
     this.playerDiv.style.left = `${this.positionX}px`;
     this.playerDiv.style.top = `${this.positionY}px`;
 
+    
+    this.playerEye = document.createElement("div");
+    this.playerEye.classList.add("eye");
+    this.playerDiv.appendChild(this.playerEye)  
     this.playerMounth = document.createElement("div");
     this.playerMounth.classList.add("playerMounth");
+    // this.playerImg=document.createElement('img')
+    // this.playerImg.src=`./assets/antek.JPG`
+    // this.playerDiv.appendChild(this.playerImg)    
     this.playerDiv.appendChild(this.playerMounth);
+    this.pacmanContainer?.appendChild(this.playerDiv);
   }
 
   moveRight = () => {
