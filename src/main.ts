@@ -7,4 +7,4 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   </div>
 `
 
-new Pacman("Lukasz","easy")
+new Pacman("Mama","easy")
