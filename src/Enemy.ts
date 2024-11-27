@@ -6,7 +6,10 @@ export class Enemy extends Player {
   }
  
   enemyChangeDirection = () => {
-    let indexRandom = Math.ceil(Math.random() * this.directions.length);
+    let indexRandom = Math.floor(Math.random() * this.directions.length);
+   
+    
     this.direction = this.directions[indexRandom];
+    console.log(this.direction);
   };
 }
